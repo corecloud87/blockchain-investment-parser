@@ -1,0 +1,47 @@
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "io/ioutil"
+    "encoding/json"
+)
+
+type MarketData struct {
+    Symbol string `json:"symbol"`
+    Price  string `json:"price"`
+}
+
+func fetchMarketData(url string) ([]MarketData, error) {
+    response, err := http.Get(url)
+    if err != nil {
+        return nil, err
+    }
+    defer response.Body.Close()
+
+    body, err := ioutil.ReadAll(response.Body)
+    if err != nil {
+        return nil, err
+    }
+
+    var data []MarketData
+    err = json.Unmarshal(body, &data)
+    if err != nil {
+        return nil, err
+    }
+
+    return data, nil
+}
+
+func main() {
+    url := "https://api.example.com/marketdata"
+    data, err := fetchMarketData(url)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+
+    for _, md := range data {
+        fmt.Printf("Symbol: %s, Price: %s\n", md.Symbol, md.Price)
+    }
+}

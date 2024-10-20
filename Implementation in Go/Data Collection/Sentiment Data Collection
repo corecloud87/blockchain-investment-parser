@@ -1,0 +1,23 @@
+import (
+    "github.com/dghubble/go-twitter/twitter"
+    "github.com/dghubble/oauth1"
+)
+
+func getTwitterClient() *twitter.Client {
+    config := oauth1.NewConfig("consumerKey", "consumerSecret")
+    token := oauth1.NewToken("accessToken", "accessSecret")
+    httpClient := config.Client(oauth1.NoContext, token)
+
+    client := twitter.NewClient(httpClient)
+    return client
+}
+
+func fetchTweets(client *twitter.Client, query string) {
+    search, _, _ := client.Search.Tweets(&twitter.SearchTweetParams{
+        Query: query,
+        Count: 100,
+    })
+    for _, tweet := range search.Statuses {
+        fmt.Println(tweet.Text)
+    }
+}

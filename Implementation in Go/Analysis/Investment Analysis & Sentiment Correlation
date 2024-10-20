@@ -1,0 +1,10 @@
+// Pseudocode for combining data
+func correlateSentimentAndMarket(marketData []MarketData, sentimentData []SentimentData) {
+    for _, md := range marketData {
+        for _, sd := range sentimentData {
+            if md.Symbol == sd.Symbol {
+                // Perform correlation analysis
+            }
+        }
+    }
+}

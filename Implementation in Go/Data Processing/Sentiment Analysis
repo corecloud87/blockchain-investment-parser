@@ -1,0 +1,18 @@
+package main
+
+import (
+    "fmt"
+    "github.com/jdkato/prose/v2"
+)
+
+func analyzeSentiment(text string) {
+    doc, _ := prose.NewDocument(text)
+    for _, tok := range doc.Tokens() {
+        fmt.Println(tok.Text, tok.Tag, tok.Label)
+    }
+}
+
+func main() {
+    text := "The market is looking very bullish today!"
+    analyzeSentiment(text)
+}

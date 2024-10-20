@@ -1,0 +1,13 @@
+func calculateVolatility(prices []float64) float64 {
+    var sum, mean, sqDiff float64
+    n := float64(len(prices))
+    for _, price := range prices {
+        sum += price
+    }
+    mean = sum / n
+    for _, price := range prices {
+        sqDiff += (price - mean) * (price - mean)
+    }
+    variance := sqDiff / n
+    return math.Sqrt(variance)
+}
